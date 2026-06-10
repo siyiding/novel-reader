@@ -4,11 +4,11 @@
       <router-link to="/" class="back-btn">← 返回首页</router-link>
       <h1>目录</h1>
     </div>
-    <div class="volume">
-      <h2 class="volume-title">第一卷 · 破产酒楼与山海初宴</h2>
+    <div class="volume" v-for="vol in volumeGroups" :key="vol.name">
+      <h2 class="volume-title">{{ vol.name }}</h2>
       <div class="chapter-grid">
         <router-link 
-          v-for="ch in chapterList" 
+          v-for="ch in vol.chapters" 
           :key="ch.id" 
           :to="`/chapter/${ch.id}`"
           class="chapter-item"
@@ -23,10 +23,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { chapterList } from '../data/chapters.js'
 
 const currentChapter = ref(1)
+
+const volumeGroups = computed(() => {
+  const groups = {}
+  for (const ch of chapterList) {
+    if (!groups[ch.volume]) {
+      groups[ch.volume] = { name: ch.volume, chapters: [] }
+    }
+    groups[ch.volume].chapters.push(ch)
+  }
+  return Object.values(groups)
+})
 
 onMounted(() => {
   const saved = localStorage.getItem('novel-last-chapter')
@@ -72,6 +83,11 @@ onMounted(() => {
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  margin-bottom: 24px;
+}
+
+.volume:last-child {
+  margin-bottom: 0;
 }
 
 .volume-title {

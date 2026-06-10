@@ -4,7 +4,7 @@
       <div class="book-cover">
         <div class="cover-inner">
           <h1 class="book-title">山海异兽美食录</h1>
-          <p class="book-subtitle">第一卷 · 破产酒楼与山海初宴</p>
+          <p class="book-subtitle">第一卷 · 破产酒楼与山海初宴 / 第二卷 · 归途暗影与战术初猎</p>
           <div class="cover-decoration"></div>
         </div>
       </div>
@@ -15,11 +15,11 @@
         </p>
         <div class="stats">
           <div class="stat">
-            <span class="stat-num">100</span>
+            <span class="stat-num">{{ chapterList.length }}</span>
             <span class="stat-label">章节</span>
           </div>
           <div class="stat">
-            <span class="stat-num">1</span>
+            <span class="stat-num">{{ new Set(chapterList.map(c => c.volume)).size }}</span>
             <span class="stat-label">卷</span>
           </div>
         </div>
